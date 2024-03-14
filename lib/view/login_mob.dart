@@ -15,15 +15,15 @@ class _LoginMobileState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: const Text("Login"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children:<Widget>[
           Container(              // Username Field
-          child: TextField(
-        obscureText: true,
+          child: const TextField(
+        obscureText: false,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Username',
@@ -31,9 +31,9 @@ class _LoginMobileState extends State<StatefulWidget> {
         ),
       )),
       Container(                // Password Field
-          margin: EdgeInsets.only(top: 50.00),
+          margin: const EdgeInsets.only(top: 50.00),
           alignment: Alignment.center,
-          child: TextField(
+          child: const TextField(
         obscureText: true,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
