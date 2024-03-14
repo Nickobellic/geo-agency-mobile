@@ -13,6 +13,8 @@ class _LoginMobileState extends State<StatefulWidget> {
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
 
   @override
   void dispose() {
@@ -28,13 +30,20 @@ class _LoginMobileState extends State<StatefulWidget> {
       appBar: AppBar(
         title: const Text("Login"),
       ),
-      body: Column(
+      body: Form(
+        key: _formKey,
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children:<Widget>[
           Container(      
             margin: EdgeInsets.symmetric(horizontal: 25.0),        // Username Field
-          child: TextField(
+          child: TextFormField(
+        validator: (value) {
+          if(value == null || value.isEmpty) {
+            return 'Enter the Username';
+          }
+        },
         obscureText: false,
         controller: usernameController,
         decoration: InputDecoration(
@@ -45,9 +54,14 @@ class _LoginMobileState extends State<StatefulWidget> {
       Container(                // Password Field
           margin: const EdgeInsets.only(top: 50.00, left: 25.0, right: 25.0),
           alignment: Alignment.center,
-          child: TextField(
+          child: TextFormField(
         obscureText: true,
         controller: passwordController,
+        validator: (value) {
+          if(value == null || value.isEmpty) {
+            return "Enter the Password";
+          }
+        },
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           label: Center(child: Text('Password'),),
@@ -59,14 +73,17 @@ class _LoginMobileState extends State<StatefulWidget> {
         child: ElevatedButton(
         child: const Text('Submit'),
       onPressed: () {
-        print(passwordController.text);
-        usernameController.clear();
-        passwordController.clear();
+        if(_formKey.currentState!.validate()) {
+          print(passwordController.text);
+          usernameController.clear();
+          passwordController.clear();
+        }
 
       }, ),
       ),
 
         ],
+      )
       )
     );
   }
