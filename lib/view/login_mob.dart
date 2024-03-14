@@ -10,6 +10,17 @@ class LoginMobile extends StatefulWidget {
 }
 
 class _LoginMobileState extends State<StatefulWidget> {
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
 
   Widget build(BuildContext context) {
@@ -21,26 +32,40 @@ class _LoginMobileState extends State<StatefulWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children:<Widget>[
-          Container(              // Username Field
-          child: const TextField(
+          Container(      
+            margin: EdgeInsets.symmetric(horizontal: 25.0),        // Username Field
+          child: TextField(
         obscureText: false,
+        controller: usernameController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: 'Username',
-          contentPadding: EdgeInsets.symmetric(horizontal: 150.00)
+          label: Center(child: Text('Username'),),
         ),
       )),
       Container(                // Password Field
-          margin: const EdgeInsets.only(top: 50.00),
+          margin: const EdgeInsets.only(top: 50.00, left: 25.0, right: 25.0),
           alignment: Alignment.center,
-          child: const TextField(
+          child: TextField(
         obscureText: true,
+        controller: passwordController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: 'Password',
-          contentPadding: EdgeInsets.symmetric(horizontal: 150.00)
+          label: Center(child: Text('Password'),),
         ),
-      ))
+      )),
+      Container(
+        margin: EdgeInsets.only(top: 30.00),
+        alignment: Alignment.center,
+        child: ElevatedButton(
+        child: const Text('Submit'),
+      onPressed: () {
+        print(passwordController.text);
+        usernameController.clear();
+        passwordController.clear();
+
+      }, ),
+      ),
+
         ],
       )
     );
