@@ -78,10 +78,15 @@ class _LoginMobileState extends State<StatefulWidget> {
         alignment: Alignment.center,
         child: ElevatedButton(
         child: const Text('Submit'),
-      onPressed: () {
+      onPressed: ()async {
+
+
         if(_formKey.currentState!.validate()) {
           print(passwordController.text); // Prints Password Text in the Console
-          print(_loginVM.validateUser(usernameController.text, passwordController.text)); // Validates whether the User was already Signed Up or not
+          print(_loginVM.getOneFromApi()); // Sample DIO request to get User detail
+          await _loginVM.validateUser(usernameController.text, passwordController.text); // Validates Login details and saves data inside Shared Preferences
+          dynamic userInfo = await _loginVM.getUserFilledInfo(usernameController.text, passwordController.text); // Read data from Shared Preference
+          print(userInfo); // Printing the data stored in Shared Preferences
           usernameController.clear();
           passwordController.clear();
         }
