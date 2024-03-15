@@ -1,4 +1,9 @@
 import "package:flutter/material.dart";
+import "../repository/login_repo.dart";
+import "../view_model/login_view_model.dart";
+import '../model/User.dart';
+
+// Login View -> User interactible UI
 
 class LoginMobile extends StatefulWidget {
   const LoginMobile({super.key});
@@ -14,6 +19,7 @@ class _LoginMobileState extends State<StatefulWidget> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final LoginDetailsModel _loginVM = LoginDetailsModel(LoginRepository());
 
 
   @override
@@ -74,7 +80,8 @@ class _LoginMobileState extends State<StatefulWidget> {
         child: const Text('Submit'),
       onPressed: () {
         if(_formKey.currentState!.validate()) {
-          print(passwordController.text);
+          print(passwordController.text); // Prints Password Text in the Console
+          print(_loginVM.validateUser(usernameController.text, passwordController.text)); // Validates whether the User was already Signed Up or not
           usernameController.clear();
           passwordController.clear();
         }
