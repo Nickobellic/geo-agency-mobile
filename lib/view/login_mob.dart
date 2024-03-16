@@ -6,7 +6,7 @@ import '../model/User.dart';
 
 // Login View -> User interactible UI
 
-class LoginMobile extends ConsumerStatefulWidget {
+class LoginMobile extends ConsumerStatefulWidget {  // ConsumerStatefulWidget
   const LoginMobile({super.key});
 
   @override
@@ -15,12 +15,12 @@ class LoginMobile extends ConsumerStatefulWidget {
   }
 }
 
-class _LoginMobileState extends ConsumerState<LoginMobile>  {
+class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerState<View>
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late LoginDetailsModelImpl ldModel;
+  late LoginDetailsModelImpl ldModel; // Instance of View Model defined
 
 
   @override
@@ -38,9 +38,9 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
+    return Consumer(  // Use Consumer to access the Provider methods
       builder: (context, ref, child) {
-        final state = ref.watch(loginVMProvider);
+        final state = ref.watch(loginVMProvider); // Using the View Model Provider
 
         return Scaffold(
       appBar: AppBar(

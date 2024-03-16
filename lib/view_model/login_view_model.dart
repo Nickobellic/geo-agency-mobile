@@ -6,7 +6,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 
 // View Model which interacts with Login Form
 
-final loginVMProvider = Provider<LoginDetailsModelImpl>((ref) {
+final loginVMProvider = Provider<LoginDetailsModelImpl>((ref) {   // Creating provider inside View Model for accessing data in View
   return LoginDetailsModelImpl(loginRep: ref.read(LoginRepositoryProvider));
 });
 

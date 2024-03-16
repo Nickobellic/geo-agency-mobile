@@ -5,7 +5,7 @@ import "./view/login_mob.dart";
 
 void main() {
   runApp(
-    ProviderScope(
+    ProviderScope(  // Wrap MyApp() with Provider Scope to use Provider inside App
       child: MyApp()
     )
     );

@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Repository -> Fetch Data from Data Source. As of now, it is hardcoded
 
-final LoginRepositoryProvider = Provider<LoginRepository>((_) => LoginRepositoryImpl());
+final LoginRepositoryProvider = Provider<LoginRepository>((_) => LoginRepositoryImpl()); // Provider for Login Repository
 
 abstract class LoginRepository {
   String getUsername();
