@@ -1,25 +1,26 @@
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 import "../repository/login_repo.dart";
 import "../view_model/login_view_model.dart";
 import '../model/User.dart';
 
 // Login View -> User interactible UI
 
-class LoginMobile extends StatefulWidget {
+class LoginMobile extends ConsumerStatefulWidget {
   const LoginMobile({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return _LoginMobileState();
   }
 }
 
-class _LoginMobileState extends State<StatefulWidget> {
+class _LoginMobileState extends ConsumerState<LoginMobile>  {
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final LoginDetailsModel _loginVM = LoginDetailsModel(LoginRepository());
+  late LoginDetailsModelImpl ldModel;
 
 
   @override
@@ -30,9 +31,18 @@ class _LoginMobileState extends State<StatefulWidget> {
   }
 
   @override
+  void initState() {
+    super.initState();
 
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer(
+      builder: (context, ref, child) {
+        final state = ref.watch(loginVMProvider);
+
+        return Scaffold(
       appBar: AppBar(
         title: const Text("Login"),
       ),
@@ -83,9 +93,9 @@ class _LoginMobileState extends State<StatefulWidget> {
 
         if(_formKey.currentState!.validate()) {
           print(passwordController.text); // Prints Password Text in the Console
-          print(_loginVM.getOneFromApi()); // Sample DIO request to get User detail
-          await _loginVM.validateUser(usernameController.text, passwordController.text); // Validates Login details and saves data inside Shared Preferences
-          dynamic userInfo = await _loginVM.getUserFilledInfo(usernameController.text, passwordController.text); // Read data from Shared Preference
+          print(state.getOneFromApi()); // Sample DIO request to get User detail
+          await state.validateUser(usernameController.text, passwordController.text); // Validates Login details and saves data inside Shared Preferences
+          dynamic userInfo = await state.getUserFilledInfo(usernameController.text, passwordController.text); // Read data from Shared Preference
           print(userInfo); // Printing the data stored in Shared Preferences
           usernameController.clear();
           passwordController.clear();
@@ -98,5 +108,9 @@ class _LoginMobileState extends State<StatefulWidget> {
       )
       )
     );
-  }
+
+      },
+    );
+
+      }
 }

@@ -1,10 +1,23 @@
 import "../model/User.dart";
 import "package:shared_preferences/shared_preferences.dart";
 import "package:dio/dio.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Repository -> Fetch Data from Data Source. As of now, it is hardcoded
 
-class LoginRepository {
+final LoginRepositoryProvider = Provider<LoginRepository>((_) => LoginRepositoryImpl());
+
+abstract class LoginRepository {
+  String getUsername();
+  String getPassword();
+  Future getUserFromApi();
+  void saveLoginInfo(String _name, String _pass, bool logged);
+  Future getLoginInfo();
+}
+
+
+class LoginRepositoryImpl extends LoginRepository{
   final dio = Dio();
 
 
@@ -14,27 +27,33 @@ class LoginRepository {
     User("john@gmail.com", "john")
   ];
 
+  @override
   String getUsername() {    // Get first user's username
     return (_userList[0].username);
   }
 
+  @override
   String getPassword() {   // Get first user's password
     return (_userList[0].password);
   }
 
-  void getUserFromApi() async { // Get random User detail from API through Dio
+  @override
+  Future getUserFromApi()async { // Get random User detail from API through Dio
     Response res;
     res = await dio.get("https://reqres.in/api/users/2");
-    print(res.data.toString());
+    
     [res.data['data']].forEach((data) {
       _userList.add(User(data["email"], data["first_name"]));
     });
 
-    _userList.forEach((user) => {
+    _userList.forEach((user) => 
       print("${user.username} & ${user.password}")
-    });
+    );
+
+    return (res.data.toString());
   }
 
+  @override
   void saveLoginInfo(String _username, String _password, bool _logged) async {  // Saving Login Info in Shared Preferences
 
     final SharedPreferences pref = await SharedPreferences.getInstance();
@@ -43,6 +62,7 @@ class LoginRepository {
     await pref.setBool("Logged_In", _logged);
   }
   
+  @override
   Future getLoginInfo()async {  // Fetch the stored Shared Preferences
 
     final SharedPreferences pref = await SharedPreferences.getInstance();
