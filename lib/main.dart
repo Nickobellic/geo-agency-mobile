@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod/riverpod.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geo_agency_mobile/view/login_web.dart';
 import "./view/login_mob.dart";
 
 void main() {
@@ -16,8 +16,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginMobile(),
+    return MaterialApp(
+      home: MainPage.platformSpecificUI(context),
+      debugShowCheckedModeBanner: false,
     );
+  }
+}
+
+class MainPage {
+  static Widget platformSpecificUI(BuildContext context) {
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      return const LoginMobile(); // Mobile Widget
+    } else {
+      return const LoginWeb(); // Web Widget
+    }
   }
 }

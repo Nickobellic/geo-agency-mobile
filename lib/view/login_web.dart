@@ -4,16 +4,16 @@ import "../view_model/login_view_model.dart";
 
 // Login View -> User interactible UI
 
-class LoginMobile extends ConsumerStatefulWidget {  // ConsumerStatefulWidget
-  const LoginMobile({super.key});
+class LoginWeb extends ConsumerStatefulWidget {  // ConsumerStatefulWidget
+  const LoginWeb({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
-    return _LoginMobileState();
+    return _LoginWebState();
   }
 }
 
-class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerState<View>
+class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<View>
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -42,7 +42,7 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
 
         return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text("Login (Web)"),
       ),
       body: Form(
         key: _formKey,
@@ -50,8 +50,14 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children:<Widget>[
-          Container(      
-            margin: EdgeInsets.symmetric(horizontal: 25.0),        // Username Field
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+            Text("Username",
+          
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),)
+            ,SizedBox(      
+         // Username Field
+          width: 300.0,
           child: TextFormField(
         validator: (value) {
           if(value == null || value.isEmpty) {
@@ -60,14 +66,19 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
         },
         obscureText: false,
         controller: usernameController,
+        
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           label: Center(child: Text('Username'),),
         ),
-      )),
-      Container(                // Password Field
-          margin: const EdgeInsets.only(top: 50.00, left: 25.0, right: 25.0),
-          alignment: Alignment.center,
+      ))
+          ])
+          ,SizedBox(height: 50,),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly
+          ,children: [
+            Text('Password', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+            SizedBox(     
+        width: 300.0,           // Password Field
           child: TextFormField(
         obscureText: true,
         controller: passwordController,
@@ -81,26 +92,33 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
           label: Center(child: Text('Password'),),
         ),
       )),
+          ])
+          ,
+      
       Container(
-        margin: EdgeInsets.only(top: 30.00),
+        margin: EdgeInsets.only(top: 50.00),
         alignment: Alignment.center,
-        child: ElevatedButton(
-        child: const Text('Submit'),
+        child: Column(children: [
+        ElevatedButton(
+        style: TextButton.styleFrom(padding: const EdgeInsets.all(20.0)),
+        child: const Text('Submit', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
       onPressed: ()async {
 
 
         if(_formKey.currentState!.validate()) {
-          print(passwordController.text); // Prints Password Text in the Console
-          dynamic userDetail =  await state.getOneFromApi(); // Sample DIO request to get User detail
-          print(userDetail);
+          //print(passwordController.text); // Prints Password Text in the Console
+          print(await state.getOneFromApi()); // Sample DIO request to get User detail
           await state.validateUser(usernameController.text, passwordController.text); // Validates Login details and saves data inside Shared Preferences
           dynamic userInfo = await state.getUserFilledInfo(usernameController.text, passwordController.text); // Read data from Shared Preference
-          print(userInfo); // Printing the data stored in Shared Preferences
+          //print(userInfo); // Printing the data stored in Shared Preferences
           usernameController.clear();
           passwordController.clear();
         }
 
-      }, ),
+      }, )
+        ],)
+        
+,
       ),
 
         ],

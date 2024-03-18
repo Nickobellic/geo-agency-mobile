@@ -9,8 +9,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 final LoginRepositoryProvider = Provider<LoginRepository>((_) => LoginRepositoryImpl()); // Provider for Login Repository
 
 abstract class LoginRepository {
-  String getUsername();
-  String getPassword();
+  List<String> getUsernames();
+  List<String> getPasswords();
   Future getUserFromApi();
   void saveLoginInfo(String _name, String _pass, bool logged);
   Future getLoginInfo();
@@ -28,13 +28,21 @@ class LoginRepositoryImpl extends LoginRepository{
   ];
 
   @override
-  String getUsername() {    // Get first user's username
-    return (_userList[0].username);
+  List<String> getUsernames() {    // Get first user's username
+    List<String> vals = [];
+    _userList.forEach((user) => {
+      vals.add(user.username)
+    });
+    return (vals);
   }
 
   @override
-  String getPassword() {   // Get first user's password
-    return (_userList[0].password);
+  List<String> getPasswords() {   // Get first user's password
+    List<String> passes = [];
+    _userList.forEach((user) => {
+      passes.add(user.password)
+    });
+    return (passes);
   }
 
   @override
@@ -46,9 +54,9 @@ class LoginRepositoryImpl extends LoginRepository{
       _userList.add(User(data["email"], data["first_name"]));
     });
 
-    _userList.forEach((user) => 
+    /*_userList.forEach((user) => 
       print("${user.username} & ${user.password}")
-    );
+    );*/
 
     return (res.data.toString());
   }

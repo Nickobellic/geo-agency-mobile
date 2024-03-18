@@ -1,5 +1,3 @@
-import "dart:ffi";
-import "../model/User.dart";
 import "../repository/login_repo.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
@@ -25,7 +23,7 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
 
   @override
   String printUser() {  // Get first User's username and password
-    return "${loginRep.getUsername()} & ${loginRep.getPassword()}";
+    return "${loginRep.getUsernames().toString()} & ${loginRep.getPasswords().toString()}";
   }
 
   @override
@@ -35,9 +33,10 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
 
   @override
   Future validateUser(String _username, String _password) async{  // Check whether they're already a member or not. Save it in shared_preferences according to the status
-    String fetchedUsername = loginRep.getUsername();
-    String fetchedPassword = loginRep.getPassword();
-    if(_username == fetchedUsername && _password == fetchedPassword) {
+    List<String> fetchedUsernames = loginRep.getUsernames();
+    List<String> fetchedPasswords = loginRep.getPasswords();
+
+    if(fetchedUsernames.contains(_username) && fetchedPasswords.contains(_password)) {
       loginRep.saveLoginInfo(_username, _password, true);  // If already a member, set logged in as true
       return "True";
     } else {
