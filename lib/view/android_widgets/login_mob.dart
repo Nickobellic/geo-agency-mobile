@@ -1,19 +1,21 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "../view_model/login_view_model.dart";
+import "package:geo_agency_mobile/view/android_widgets/login_success_mob.dart";
+import "package:geo_agency_mobile/view/android_widgets/login_failed_mob.dart";
+import '../../view_model/login_view_model.dart';
 
 // Login View -> User interactible UI
 
-class LoginWeb extends ConsumerStatefulWidget {  // ConsumerStatefulWidget
-  const LoginWeb({super.key});
+class LoginMobile extends ConsumerStatefulWidget {  // ConsumerStatefulWidget
+  const LoginMobile({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
-    return _LoginWebState();
+    return _LoginMobileState();
   }
 }
 
-class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<View>
+class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerState<View>
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -42,7 +44,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
 
         return Scaffold(
       appBar: AppBar(
-        title: const Text("Login (Web)"),
+        title: const Text("Login"),
       ),
       body: Form(
         key: _formKey,
@@ -50,14 +52,8 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children:<Widget>[
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-            Text("Username",
-          
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),)
-            ,SizedBox(      
-         // Username Field
-          width: 300.0,
+          Container(      
+            margin: EdgeInsets.symmetric(horizontal: 25.0),        // Username Field
           child: TextFormField(
         validator: (value) {
           if(value == null || value.isEmpty) {
@@ -66,19 +62,14 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
         },
         obscureText: false,
         controller: usernameController,
-        
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           label: Center(child: Text('Username'),),
         ),
-      ))
-          ])
-          ,SizedBox(height: 50,),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly
-          ,children: [
-            Text('Password', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-            SizedBox(     
-        width: 300.0,           // Password Field
+      )),
+      Container(                // Password Field
+          margin: const EdgeInsets.only(top: 50.00, left: 25.0, right: 25.0),
+          alignment: Alignment.center,
           child: TextFormField(
         obscureText: true,
         controller: passwordController,
@@ -92,33 +83,39 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
           label: Center(child: Text('Password'),),
         ),
       )),
-          ])
-          ,
-      
       Container(
-        margin: EdgeInsets.only(top: 50.00),
+        margin: EdgeInsets.only(top: 30.00),
         alignment: Alignment.center,
-        child: Column(children: [
-        ElevatedButton(
-        style: TextButton.styleFrom(padding: const EdgeInsets.all(20.0)),
-        child: const Text('Submit', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+        child: ElevatedButton(
+        child: const Text('Submit'),
       onPressed: ()async {
 
 
         if(_formKey.currentState!.validate()) {
           //print(passwordController.text); // Prints Password Text in the Console
-          print(await state.getOneFromApi()); // Sample DIO request to get User detail
-          await state.validateUser(usernameController.text, passwordController.text); // Validates Login details and saves data inside Shared Preferences
+          dynamic userDetail =  await state.getOneFromApi(); // Sample DIO request to get User detail
+          //print(userDetail);
+          dynamic existingUser = await state.validateUser(usernameController.text, passwordController.text); // Validates Login details and saves data inside Shared Preferences
           dynamic userInfo = await state.getUserFilledInfo(usernameController.text, passwordController.text); // Read data from Shared Preference
-          //print(userInfo); // Printing the data stored in Shared Preferences
+          print(existingUser); // Printing the data stored in Shared Preferences
+
+          if(existingUser == true) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginSuccessMobile()),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginFailureMobile()),
+            );
+          } 
+
           usernameController.clear();
           passwordController.clear();
         }
 
-      }, )
-        ],)
-        
-,
+      }, ),
       ),
 
         ],

@@ -38,10 +38,10 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
 
     if(fetchedUsernames.contains(_username) && fetchedPasswords.contains(_password)) {
       loginRep.saveLoginInfo(_username, _password, true);  // If already a member, set logged in as true
-      return "True";
+      return true;
     } else {
       loginRep.saveLoginInfo(_username, _password, false); // If it is a new member, set logged in as false
-      return "Unauthorized Access";
+      return false;
     }
   }
 

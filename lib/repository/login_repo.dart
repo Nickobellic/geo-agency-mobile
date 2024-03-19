@@ -79,6 +79,7 @@ class LoginRepositoryImpl extends LoginRepository{
     final bool? isLogged = pref.getBool("Logged_In");
 
     return ("From Shared Preferences => Username: ${loggedUsername} Password: ${loggedPassword} Logged In?: ${isLogged}");
+    //return (isLogged);
   }
 
 }
