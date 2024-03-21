@@ -58,7 +58,9 @@ class LoginRepositoryImpl extends LoginRepository{
       print("${user.username} & ${user.password}")
     );*/
 
-    return (res.data.toString());
+   /* return (res.data.toString()); */
+   print(res.data["data"]["email"]);
+   return ([res.data["data"]["email"], res.data["data"]["first_name"]]);
   }
 
   @override
