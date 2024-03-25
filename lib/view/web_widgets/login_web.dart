@@ -62,6 +62,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
          // Username Field
           width: 300.0,
           child: TextFormField(
+        key: const Key('textField_username_web'),
         validator: (value) => LoginValidation.validateTextField(value, "Username"),
         obscureText: false,
         controller: usernameController,
@@ -79,6 +80,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
             SizedBox(     
         width: 300.0,           // Password Field
           child: TextFormField(
+            key: const Key('textField_password_web') ,
         obscureText: true,
         controller: passwordController,
         validator: (value) => LoginValidation.validateTextField(value, "Password"),
@@ -95,6 +97,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
         alignment: Alignment.center,
         child: Column(children: [
         ElevatedButton(
+        key: const Key('textField_submit_web'),
         style: TextButton.styleFrom(padding: const EdgeInsets.all(20.0)),
         child: const Text('Submit', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
       onPressed: ()async {

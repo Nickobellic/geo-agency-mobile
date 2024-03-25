@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## To run Integration Tests
+
+flutter drive  --driver=integration_test/login_web.dart --target=integration_test/login_web_test.dart -d chrome 
+
+## Start Chromedriver before Integration Tests for Web App
+
+chromedriver --port=4444
