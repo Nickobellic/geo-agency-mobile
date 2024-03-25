@@ -13,7 +13,6 @@ final LoginRepositoryProvider = Provider<LoginRepository>((_) => LoginRepository
 
 
 class LoginRepositoryImpl extends LoginRepository{
-  final dio = Dio();
 
 
   final List<User> _userList = [    // Define a List for Storing instances of type 'User'

@@ -69,7 +69,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
         
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          label: Center(child: Text('Username'),),
+          label: Center(child: Text('Username', key: Key('username_web'),),),
         ),
       ))
           ])
@@ -86,7 +86,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
         validator: (value) => LoginValidation.validateTextField(value, "Password"),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          label: Center(child: Text('Password'),),
+          label: Center(child: Text('Password', key: Key('password_web'),),),
         ),
       )),
           ])

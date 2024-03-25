@@ -22,3 +22,7 @@ flutter drive  --driver=integration_test/login_web.dart --target=integration_tes
 ## Start Chromedriver before Integration Tests for Web App
 
 chromedriver --port=4444
+
+## To run Unit Tests
+
+flutter test test/unit/login_repo_test.dart
