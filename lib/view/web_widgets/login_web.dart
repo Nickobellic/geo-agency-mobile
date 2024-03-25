@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "../rules/login_validation.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import '../../view_model/login_view_model.dart';
 import '../web_widgets/login_success_web.dart';
@@ -61,11 +62,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
          // Username Field
           width: 300.0,
           child: TextFormField(
-        validator: (value) {
-          if(value == null || value.isEmpty) {
-            return 'Enter the Username';
-          }
-        },
+        validator: (value) => LoginValidation.validateTextField(value, "Username"),
         obscureText: false,
         controller: usernameController,
         
@@ -84,11 +81,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
           child: TextFormField(
         obscureText: true,
         controller: passwordController,
-        validator: (value) {
-          if(value == null || value.isEmpty) {
-            return "Enter the Password";
-          }
-        },
+        validator: (value) => LoginValidation.validateTextField(value, "Password"),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           label: Center(child: Text('Password'),),

@@ -3,6 +3,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:geo_agency_mobile/view/android_widgets/login_success_mob.dart";
 import "package:geo_agency_mobile/view/android_widgets/login_failed_mob.dart";
 import '../../view_model/login_view_model.dart';
+import "../rules/login_validation.dart";
 
 // Login View -> User interactible UI
 
@@ -55,11 +56,7 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
           Container(      
             margin: EdgeInsets.symmetric(horizontal: 25.0),        // Username Field
           child: TextFormField(
-        validator: (value) {
-          if(value == null || value.isEmpty) {
-            return 'Enter the Username';
-          }
-        },
+        validator: (value) => LoginValidation.validateTextField(value, "Username"),
         obscureText: false,
         controller: usernameController,
         decoration: InputDecoration(
@@ -73,11 +70,7 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
           child: TextFormField(
         obscureText: true,
         controller: passwordController,
-        validator: (value) {
-          if(value == null || value.isEmpty) {
-            return "Enter the Password";
-          }
-        },
+        validator: (value) => LoginValidation.validateTextField(value, "Password"),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           label: Center(child: Text('Password'),),
