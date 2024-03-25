@@ -1,5 +1,7 @@
 import "../repository/login_repo.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import '../repository/abstract/login_repository.dart';
+import "./abstract/login_view_model_abstract.dart";
 
 
 // View Model which interacts with Login Form
@@ -8,12 +10,6 @@ final loginVMProvider = Provider<LoginDetailsModelImpl>((ref) {   // Creating pr
   return LoginDetailsModelImpl(loginRep: ref.read(LoginRepositoryProvider));
 });
 
-abstract class LoginDetailsModel {
-  String printUser();
-  Future getOneFromApi();
-  Future validateUser(String _user, String _pass);
-  Future getUserFilledInfo(String _user, String _pass);
-}
 
 
 class LoginDetailsModelImpl extends LoginDetailsModel {

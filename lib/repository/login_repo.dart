@@ -1,20 +1,13 @@
 import "../model/User.dart";
 import "package:shared_preferences/shared_preferences.dart";
 import "package:dio/dio.dart";
+import 'abstract/login_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // Repository -> Fetch Data from Data Source. As of now, it is hardcoded
 
 final LoginRepositoryProvider = Provider<LoginRepository>((_) => LoginRepositoryImpl()); // Provider for Login Repository
-
-abstract class LoginRepository {
-  List<String> getUsernames();
-  List<String> getPasswords();
-  Future getUserFromApi();
-  void saveLoginInfo(String _name, String _pass, bool logged);
-  Future getLoginInfo();
-}
 
 
 class LoginRepositoryImpl extends LoginRepository{
