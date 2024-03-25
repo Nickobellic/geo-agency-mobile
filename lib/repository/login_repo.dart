@@ -4,6 +4,8 @@ import "package:dio/dio.dart";
 import 'abstract/login_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:geo_agency_mobile/helper/dio_client.dart';
+import 'package:geo_agency_mobile/helper/dio_exceptions.dart';
 
 // Repository -> Fetch Data from Data Source. As of now, it is hardcoded
 
@@ -40,20 +42,16 @@ class LoginRepositoryImpl extends LoginRepository{
 
   @override
   Future getUserFromApi()async { // Get random User detail from API through Dio
-    Response res;
-    res = await dio.get("https://reqres.in/api/users/2");
-    
-    [res.data['data']].forEach((data) {
-      _userList.add(User(data["email"], data["first_name"]));
-    });
+    try {
+     final dynamic response = await DioClient.instance.get("/users/2"); // Response from DioClient in Helper 
+    _userList.add(User(response["data"]["email"], response["data"]["first_name"]));
 
-    /*_userList.forEach((user) => 
-      print("${user.username} & ${user.password}")
-    );*/
+   return ([response["data"]["email"], response["data"]["first_name"]]);
 
-   /* return (res.data.toString()); */
-   print(res.data["data"]["email"]);
-   return ([res.data["data"]["email"], res.data["data"]["first_name"]]);
+    }on DioException catch(e) { // Sending Error to the Snackbar for display
+      var error = DioExceptionClass.fromDioError(e);
+      throw error.errorMessage;
+    }
   }
 
   @override
