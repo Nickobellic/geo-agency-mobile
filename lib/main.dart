@@ -28,7 +28,7 @@ class MainPage {
     if (Theme.of(context).platform == TargetPlatform.android) {
       return const LoginMobile(); // Mobile Widget
     } else {
-      return const LoginWeb(); // Web Widget
+      return  LoginWeb(); // Web Widget
     }
   }
 }

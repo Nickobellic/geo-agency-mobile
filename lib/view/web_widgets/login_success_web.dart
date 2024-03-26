@@ -1,25 +1,8 @@
 import "package:flutter/material.dart";
+import "package:flutter_hooks/flutter_hooks.dart";
 
-class LoginSuccessWeb extends StatefulWidget {
+class LoginSuccessWeb extends HookWidget {
   const LoginSuccessWeb({super.key});
-
-  @override
-  State<LoginSuccessWeb> createState() {
-    return LoginSuccessWebState();
-  }
-}
-
-class LoginSuccessWebState extends State<LoginSuccessWeb> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

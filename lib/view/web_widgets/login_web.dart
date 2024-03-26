@@ -1,44 +1,25 @@
 import "package:flutter/material.dart";
+import 'package:flutter_hooks/flutter_hooks.dart';
 import "../rules/login_validation.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import '../../view_model/login_view_model.dart';
 import '../web_widgets/login_success_web.dart';
 import '../web_widgets/login_failed_web.dart';
-
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Login View -> User interactible UI
 
-class LoginWeb extends ConsumerStatefulWidget {  // ConsumerStatefulWidget
-  const LoginWeb({super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
-    return _LoginWebState();
-  }
-}
-
-class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<View>
+class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final usernameControllerState = StateProvider<String>((ref) => '');
   final _formKey = GlobalKey<FormState>();
   late LoginDetailsModelImpl ldModel; // Instance of View Model defined
 
 
   @override
-  void dispose() {
-    usernameController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final passwordControllerState = useState('');
     return Consumer(  // Use Consumer to access the Provider methods
       builder: (context, ref, child) {
         final state = ref.watch(loginVMProvider); // Using the View Model Provider
@@ -66,6 +47,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
         validator: (value) => LoginValidation.validateTextField(value, "Username"),
         obscureText: false,
         controller: usernameController,
+        onChanged: (value) => ref.read(usernameControllerState.notifier).state = value,
         
         decoration: InputDecoration(
           border: OutlineInputBorder(),
@@ -83,6 +65,7 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
             key: const Key('textField_password_web') ,
         obscureText: true,
         controller: passwordController,
+        onChanged: (value) => passwordControllerState.value = value,
         validator: (value) => LoginValidation.validateTextField(value, "Password"),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
@@ -101,15 +84,15 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
         style: TextButton.styleFrom(padding: const EdgeInsets.all(20.0)),
         child: const Text('Submit', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
       onPressed: ()async {
-
-
         if(_formKey.currentState!.validate()) {
           //print(passwordController.text); // Prints Password Text in the Console
           //print(await state.getOneFromApi()); // Sample DIO request to get User detail
-          dynamic existingUser = await state.validateUser(usernameController.text, passwordController.text); // Validates Login details and saves data inside Shared Preferences
-          dynamic userInfo = await state.getUserFilledInfo(usernameController.text, passwordController.text); // Read data from Shared Preference
-          print(existingUser); // Prints the Shared Preferences
-
+          String username = ref.read(usernameControllerState.notifier).state;
+          String password = passwordControllerState.value;
+          dynamic existingUser = await state.validateUser(username, password); // Validates Login details and saves data inside Shared Preferences
+          dynamic userInfo = await state.getUserFilledInfo(username, password); // Read data from Shared Preference
+          //print(existingUser); // Prints the Shared Preferences
+          print("$username & $password");
           if(existingUser == true) {
             Navigator.push(
               context,
@@ -121,9 +104,11 @@ class _LoginWebState extends ConsumerState<LoginWeb>  { // Use ConsumerState<Vie
               MaterialPageRoute(builder: (context) => const LoginFailureWeb()),
             );
           } 
-
+          ref.read(usernameControllerState.notifier).state = '';
+          passwordControllerState.value = '';
           usernameController.clear();
           passwordController.clear();
+
         }
 
       }, )
