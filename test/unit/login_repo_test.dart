@@ -1,19 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:geo_agency_mobile/repository/login_repo.dart';
+import 'package:geo_agency_mobile/repository/local/login_repo_local.dart';
+import 'package:geo_agency_mobile/repository/remote/login_repo_remote.dart';
 
 void main() {
-  LoginRepositoryImpl? loginRep;
+  LoginRepositoryLocalImpl? loginLocalRep;
+  LoginRepositoryRemoteImpl? loginRemoteRep;
 
   setUpAll(() {
-    loginRep = LoginRepositoryImpl();
+    loginLocalRep = LoginRepositoryLocalImpl();
+    loginRemoteRep = LoginRepositoryRemoteImpl();
   });
   test("Gets the Usernames from the List", () {
 
-    expect(loginRep!.getUsernames(), isA<List<String>>());
+    expect(loginLocalRep!.getUsernames(), isA<List<String>>());
   }); 
 
   test("Gets the Password from the List", () {
-    final result = loginRep!.getPasswords();
+    final result = loginLocalRep!.getPasswords();
 
     expect(result, isA<List<String>>());
   }); 
