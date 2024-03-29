@@ -4,7 +4,7 @@ import '../abstract/login_repository_remote.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:geo_agency_mobile/helper/dio_client.dart';
-import 'package:geo_agency_mobile/model/data/User_data.dart' as data;
+import 'package:geo_agency_mobile/data/User_data.dart' as data;
 import 'package:geo_agency_mobile/helper/dio_exceptions.dart';
 
 // Repository -> Fetch Data from Data Source.

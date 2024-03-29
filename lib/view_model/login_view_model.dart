@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:geo_agency_mobile/repository/abstract/login_repository_remote.dart';
-
+import 'package:geo_agency_mobile/helper/dio_exceptions.dart';
+import 'package:geo_agency_mobile/helper/dio_client.dart';
 import '../repository/remote/login_repo_remote.dart';
 import 'package:geo_agency_mobile/repository/local/login_repo_local.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -18,6 +21,7 @@ final loginVMProvider = Provider<LoginDetailsModelImpl>((ref) {   // Creating pr
 class LoginDetailsModelImpl extends LoginDetailsModel {
   final LoginRepositoryLocal loginLocalRep;
   final LoginRepositoryRemote loginRemoteRep;
+  late BuildContext context;
 
   LoginDetailsModelImpl({required this.loginLocalRep, required this.loginRemoteRep});
 
@@ -32,8 +36,8 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
   }
 
   @override
-  Future validateUser(String _username, String _password) async{  // Check whether they're already a member or not. Save it in shared_preferences according to the status
-    
+  Future<Map<String, dynamic>> validateUser(String _username, String _password) async{  // Check whether they're already a member or not. Save it in shared_preferences according to the status
+    try {
     List<String> fetchedUsernames = loginLocalRep.getUsernames();
     List<String> fetchedPasswords = loginLocalRep.getPasswords();
 
@@ -42,14 +46,27 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
     fetchedUsernames.add(usersFromApi[0]);  // Adding users details from API request inside valid Users List
     fetchedPasswords.add(usersFromApi[1]);
 
+    print(usersFromApi[0]);
 
     if(fetchedUsernames.contains(_username) && fetchedPasswords.contains(_password)) {
       loginLocalRep.saveLoginInfo(_username, _password, true);  // If already a member, set logged in as true
-      return true;
+      return {"valid": true, "message": "Authenticated Successfully"};
     } else {
       loginLocalRep.saveLoginInfo(_username, _password, false); // If it is a new member, set logged in as false
-      return false;
+      return {"valid": false, "message": "Unauthorized User"};
     }
+
+
+
+    } on DioException catch(e) {
+      int statusCode = e.response!.statusCode!;
+      print('Status Code : $statusCode');
+      return {"valid":false,"message":"Network Error: $e.message"};
+    } catch(e,stackTrace) {
+        return {"valid": false, "message": "Error: $e.toString()"};
+    }
+
+
   }
 
   @override

@@ -1,4 +1,4 @@
-import 'package:geo_agency_mobile/model/data/User_data.dart' as data;
+import 'package:geo_agency_mobile/data/User_data.dart' as data;
 import 'package:geo_agency_mobile/repository/abstract/login_repository_local.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

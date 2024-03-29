@@ -4,19 +4,12 @@ import "package:geo_agency_mobile/view/android_widgets/login_success_mob.dart";
 import "package:geo_agency_mobile/view/android_widgets/login_failed_mob.dart";
 import '../../view_model/login_view_model.dart';
 import "../rules/login_validation.dart";
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Login View -> User interactible UI
 
-class LoginMobile extends ConsumerStatefulWidget {  // ConsumerStatefulWidget
-  const LoginMobile({super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
-    return _LoginMobileState();
-  }
-}
-
-class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerState<View>
+class LoginMobile extends HookConsumerWidget {  // ConsumerStatefulWidget
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -25,20 +18,9 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
 
 
   @override
-  void dispose() {
-    usernameController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final usernameText = useState('');
+    final passwordText = useState('');
     return Consumer(  // Use Consumer to access the Provider methods
       builder: (context, ref, child) {
         final state = ref.watch(loginVMProvider); // Using the View Model Provider
@@ -57,6 +39,7 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
             margin: EdgeInsets.symmetric(horizontal: 25.0),        // Username Field
           child: TextFormField(
         validator: (value) => LoginValidation.validateTextField(value, "Username"),
+        onChanged: (value) => usernameText.value = value,
         obscureText: false,
         controller: usernameController,
         decoration: InputDecoration(
@@ -71,6 +54,7 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
         obscureText: true,
         controller: passwordController,
         validator: (value) => LoginValidation.validateTextField(value, "Password"),
+        onChanged:(value) => passwordText.value = value,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           label: Center(child: Text('Password'),),
@@ -88,11 +72,19 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
           //print(passwordController.text); // Prints Password Text in the Console
           dynamic userDetail =  await state.getOneFromApi(); // Sample DIO request to get User detail
           //print(userDetail);
-          dynamic existingUser = await state.validateUser(usernameController.text, passwordController.text); // Validates Login details and saves data inside Shared Preferences
-          dynamic userInfo = await state.getUserFilledInfo(usernameController.text, passwordController.text); // Read data from Shared Preference
+          Map<String,dynamic> existingUser = await state.validateUser(usernameText.value, passwordText.value); // Validates Login details and saves data inside Shared Preferences
+          dynamic userInfo = await state.getUserFilledInfo(usernameText.value, passwordText.value); // Read data from Shared Preference
           print(existingUser); // Printing the data stored in Shared Preferences
 
-          if(existingUser == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(existingUser["message"]), 
+            action: SnackBarAction(label: 'OK', onPressed: () =>{
+              ScaffoldMessenger.of(context).hideCurrentSnackBar()
+            }),
+            duration: const Duration(milliseconds: 2000),
+            ),
+          );
+          if(existingUser["valid"] == true) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const LoginSuccessMobile()),
@@ -103,6 +95,8 @@ class _LoginMobileState extends ConsumerState<LoginMobile>  { // Use ConsumerSta
               MaterialPageRoute(builder: (context) => const LoginFailureMobile()),
             );
           } 
+          usernameText.value = '';
+          passwordText.value = '';
 
           usernameController.clear();
           passwordController.clear();

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 class MainPage {
   static Widget platformSpecificUI(BuildContext context) {
     if (Theme.of(context).platform == TargetPlatform.android) {
-      return const LoginMobile(); // Mobile Widget
+      return LoginMobile(); // Mobile Widget
     } else {
       return  LoginWeb(); // Web Widget
     }

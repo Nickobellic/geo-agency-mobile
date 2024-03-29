@@ -19,6 +19,8 @@ class DioClient {
       )
   );
 
+  Dio get dio => _dio;
+
   ///Get Method
   Future<Map<String, dynamic>> get(
       String path, {

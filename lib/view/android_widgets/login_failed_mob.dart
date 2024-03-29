@@ -1,26 +1,11 @@
 import "package:flutter/material.dart";
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LoginFailureMobile extends StatefulWidget {
+class LoginFailureMobile extends HookWidget {
   const LoginFailureMobile({super.key});
 
-  @override
-  State<LoginFailureMobile> createState() {
-    return LoginFailureMobileState();
-  }
-}
-
-class LoginFailureMobileState extends State<LoginFailureMobile> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

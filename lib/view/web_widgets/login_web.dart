@@ -89,11 +89,19 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
           //print(await state.getOneFromApi()); // Sample DIO request to get User detail
           String username = ref.read(usernameControllerState.notifier).state;
           String password = passwordControllerState.value;
-          dynamic existingUser = await state.validateUser(username, password); // Validates Login details and saves data inside Shared Preferences
+          Map<String, dynamic> existingUser = await state.validateUser(username, password);
           dynamic userInfo = await state.getUserFilledInfo(username, password); // Read data from Shared Preference
           //print(existingUser); // Prints the Shared Preferences
           print("$username & $password");
-          if(existingUser == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(existingUser["message"]), 
+            action: SnackBarAction(label: 'OK', onPressed: () =>{
+              ScaffoldMessenger.of(context).hideCurrentSnackBar()
+            }),
+            duration: const Duration(milliseconds: 3000),
+            ),
+          );
+          if(existingUser["valid"] == true) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const LoginSuccessWeb()),
