@@ -29,6 +29,7 @@ void main() {
 
   });
 
+  // API Mock testing
   test('Get 2nd User data from Reqres API', () async{
     dioAdapter.onGet('/users/2', (server) => server.reply(200, {
       "data": {
