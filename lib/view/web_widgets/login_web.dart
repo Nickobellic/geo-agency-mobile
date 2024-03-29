@@ -37,7 +37,7 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
             Text("Username",
-          
+            key: Key('username_label_web'),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),)
             ,SizedBox(      
          // Username Field
@@ -58,7 +58,7 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
           ,SizedBox(height: 50,),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly
           ,children: [
-            Text('Password', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+            Text('Password', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), key: Key("password_label"),),
             SizedBox(     
         width: 300.0,           // Password Field
           child: TextFormField(
