@@ -27,7 +27,7 @@ class LoginRepositoryLocalImpl extends LoginRepositoryLocal {
   }
 
     @override
-  void saveLoginInfo(String _username, String _password, bool _logged) async {  // Saving Login Info in Shared Preferences
+  Future<void> saveLoginInfo(String _username, String _password, bool _logged) async {  // Saving Login Info in Shared Preferences
 
     final SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("Username", _username);
