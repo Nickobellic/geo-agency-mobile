@@ -17,7 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## To run Integration Tests
 
-flutter drive  --driver=integration_test/login_web.dart --target=integration_test/login_web_test.dart -d chrome 
+flutter drive  --driver=test_driver/login_web.dart --target=integration_test/login_web_test.dart -d chrome 
 
 ## Start Chromedriver before Integration Tests for Web App
 

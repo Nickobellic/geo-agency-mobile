@@ -38,6 +38,7 @@ class LoginMobile extends HookConsumerWidget {  // ConsumerStatefulWidget
           Container(      
             margin: EdgeInsets.symmetric(horizontal: 25.0),        // Username Field
           child: TextFormField(
+            key: Key('textField_username_mob'),
         validator: (value) => LoginValidation.validateTextField(value, "Username"),
         onChanged: (value) => usernameText.value = value,
         obscureText: false,
@@ -51,6 +52,7 @@ class LoginMobile extends HookConsumerWidget {  // ConsumerStatefulWidget
           margin: const EdgeInsets.only(top: 50.00, left: 25.0, right: 25.0),
           alignment: Alignment.center,
           child: TextFormField(
+          key: Key('textField_password_mob'),
         obscureText: true,
         controller: passwordController,
         validator: (value) => LoginValidation.validateTextField(value, "Password"),
@@ -64,6 +66,7 @@ class LoginMobile extends HookConsumerWidget {  // ConsumerStatefulWidget
         margin: EdgeInsets.only(top: 30.00),
         alignment: Alignment.center,
         child: ElevatedButton(
+        key: Key('textField_submit_mob'),
         child: const Text('Submit'),
       onPressed: ()async {
 
@@ -77,7 +80,7 @@ class LoginMobile extends HookConsumerWidget {  // ConsumerStatefulWidget
           print(existingUser); // Printing the data stored in Shared Preferences
 
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(existingUser["message"]), 
+            SnackBar(content: Text(existingUser["message"]), key: Key('login_snackbar_mob'), 
             action: SnackBarAction(label: 'OK', onPressed: () =>{
               ScaffoldMessenger.of(context).hideCurrentSnackBar()
             }),

@@ -20,6 +20,7 @@ class LoginFailureMobile extends HookWidget {
             height: 300.0,
             child: Center(
               child:             Image(
+                key: Key('login_failure_img_mob'),
               image: const AssetImage('assets/images/auth_fail.jpg'),)
               ,) 
 ,

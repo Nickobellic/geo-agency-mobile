@@ -94,7 +94,7 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
           //print(existingUser); // Prints the Shared Preferences
           print("$username & $password");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(existingUser["message"]), 
+            SnackBar(key: Key('login_snackbar_web'),content: Text(existingUser["message"]), 
             action: SnackBarAction(label: 'OK', onPressed: () =>{
               ScaffoldMessenger.of(context).hideCurrentSnackBar()
             }),

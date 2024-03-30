@@ -18,6 +18,7 @@ class LoginSuccessMobile extends HookWidget {
             height: 300.0,
             child: Center(
               child:             Image(
+              key: Key('login_success_img_mob'),
               image: const AssetImage('assets/images/auth_success.jpg'),)
               ,) 
 ,

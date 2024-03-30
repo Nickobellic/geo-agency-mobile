@@ -18,7 +18,7 @@ class LoginFailureWeb extends HookWidget {
             width: 400.0,
             height: 300.0,
             child: Center(
-              child:             Image(
+              child:             Image(key: Key("login_failure_img_web"),
               image: const AssetImage('assets/images/auth_fail.jpg'),)
               ,) 
 ,

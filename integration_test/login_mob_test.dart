@@ -5,22 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-// flutter drive  --driver=integration_test/login_web.dart  --target=integration_test/login_web_test.dart -d chrome 
-
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized(); // NEW
-
-  testWidgets('Successful Authentication Test (Web)', (tester) async{
+  testWidgets('Successful Authentication Test (Mobile)', (tester) async{
 
     await tester.pumpWidget(ProviderScope(child: MyApp())); // Launches the App
 
     await tester.pump(new Duration(seconds: 3));
 
-    final usernameField = find.byKey(const Key('textField_username_web'));
-    final passwordField = find.byKey(const Key('textField_password_web'));
-    final loginButton = find.byKey(const Key('textField_submit_web'));
+    final usernameField = find.byKey(const Key('textField_username_mob'));
+    final passwordField = find.byKey(const Key('textField_password_mob'));
+    final loginButton = find.byKey(const Key('textField_submit_mob'));
 
-    expect(find.text("Login (Web)"), findsOneWidget);
+    expect(find.text("Login"), findsOneWidget);
 
     expect(find.text("Username").first, findsOneWidget, reason: 'Username Label Found');
     expect(usernameField, findsOneWidget, reason: "Username Text Field Found");
@@ -37,29 +33,29 @@ void main() {
 
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
-    final successImg = find.byKey(const Key('login_success_img_web'));
-    final snackbarWeb = find.byKey(const Key('login_snackbar_web'));
+    final successImg = find.byKey(const Key('login_success_img_mob'));
+    final snackbarMob = find.byKey(const Key('login_snackbar_mob'));
     
     expect(successImg, findsOneWidget, reason: "Authentication Success image appears");
     expect(find.text("Authenticated Successfully").first, findsOneWidget, reason: "Authentication success message appears");
-    expect(snackbarWeb, findsOneWidget, reason: "Snackbar gets displayed");
+    expect(snackbarMob, findsOneWidget, reason: "Snackbar gets displayed");
 
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
 
   });
 
-  testWidgets('Failed Authentication Test (Web)', (tester) async{
+  testWidgets('Failed Authentication Test (Mobile)', (tester) async{
 
     await tester.pumpWidget(ProviderScope(child: MyApp())); // Launches the App
 
     await tester.pump(new Duration(seconds: 3));
 
-    final usernameField = find.byKey(const Key('textField_username_web'));
-    final passwordField = find.byKey(const Key('textField_password_web'));
-    final loginButton = find.byKey(const Key('textField_submit_web'));
+    final usernameField = find.byKey(const Key('textField_username_mob'));
+    final passwordField = find.byKey(const Key('textField_password_mob'));
+    final loginButton = find.byKey(const Key('textField_submit_mob'));
 
-    expect(find.text("Login (Web)"), findsOneWidget);
+    expect(find.text("Login"), findsOneWidget);
 
     expect(find.text("Username").first, findsOneWidget, reason: 'Username Label Found');
     expect(usernameField, findsOneWidget, reason: "Username Text Field Found");
@@ -76,12 +72,12 @@ void main() {
 
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
-    final failureImg = find.byKey(const Key('login_failure_img_web'));
-    final snackbarWeb = find.byKey(const Key('login_snackbar_web'));
+    final failureImg = find.byKey(const Key('login_failure_img_mob'));
+    final snackbarMob = find.byKey(const Key('login_snackbar_mob'));
     
     expect(failureImg, findsOneWidget, reason: "Authentication Failure image appears");
     expect(find.text("Unauthorized User").first, findsOneWidget, reason: "Authentication failure message appears");
-    expect(snackbarWeb, findsOneWidget, reason: "Snackbar gets displayed");
+    expect(snackbarMob, findsOneWidget, reason: "Snackbar gets displayed");
 
     await tester.pumpAndSettle(const Duration(seconds: 2));
 

@@ -17,7 +17,8 @@ class LoginSuccessWeb extends HookWidget {
             height: 300.0,
             child: Center(
               child:             Image(
-              image: const AssetImage('assets/images/auth_success.jpg'),)
+              image: const AssetImage('assets/images/auth_success.jpg'),
+              key: Key('login_success_img_web'),)
               ,) 
 ,
           )
