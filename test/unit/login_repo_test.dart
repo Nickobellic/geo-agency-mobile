@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:geo_agency_mobile/repository/local/login_repo_local.dart';
 import 'package:geo_agency_mobile/repository/remote/login_repo_remote.dart';
 import 'package:dio/dio.dart';
+import 'package:geo_agency_mobile/view_model/login_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geo_agency_mobile/helper/dio_client.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
@@ -10,6 +11,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   LoginRepositoryLocalImpl? loginLocalRep;
   LoginRepositoryRemoteImpl? loginRemoteRep;
+  LoginDetailsModelImpl? loginVM;
   final dio = Dio();
   final dioAdapter = DioAdapter(dio: DioClient.instance.dio);
   dio.httpClientAdapter = dioAdapter;
@@ -114,5 +116,9 @@ void main() {
 });
 
   } );
+
+
+  // Test Validate Method
+
 
 }

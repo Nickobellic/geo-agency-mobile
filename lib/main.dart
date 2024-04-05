@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geo_agency_mobile/view/web_widgets/login_web.dart';
-import 'view/android_widgets/login_mob.dart';
+import 'package:geo_agency_mobile/view/desktop/login/login_web.dart';
+import 'view/mobile/login/login_mob.dart';
 
 void main() {
   runApp(

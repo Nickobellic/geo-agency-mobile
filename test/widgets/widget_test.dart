@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:geo_agency_mobile/view/android_widgets/login_failed_mob.dart';
-import 'package:geo_agency_mobile/view/android_widgets/login_mob.dart';
-import 'package:geo_agency_mobile/view/android_widgets/login_success_mob.dart';
-import 'package:geo_agency_mobile/view/web_widgets/login_failed_web.dart';
-import 'package:geo_agency_mobile/view/web_widgets/login_success_web.dart';
-import "package:geo_agency_mobile/view/web_widgets/login_web.dart";
+import 'package:geo_agency_mobile/view/mobile/login/login_failed_mob.dart';
+import 'package:geo_agency_mobile/view/mobile/login/login_mob.dart';
+import 'package:geo_agency_mobile/view/mobile/login/login_success_mob.dart';
+import 'package:geo_agency_mobile/view/desktop/login/login_failed_web.dart';
+import 'package:geo_agency_mobile/view/desktop/login/login_success_web.dart';
+import 'package:geo_agency_mobile/view/desktop/login/login_web.dart';
 
 
 void main() {
