@@ -1,5 +1,5 @@
 import 'package:geo_agency_mobile/data/User_data.dart' as data;
-import 'package:geo_agency_mobile/repository/abstract/login_repository_local.dart';
+import 'package:geo_agency_mobile/repository/login/abstract_login_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import "package:shared_preferences/shared_preferences.dart";
@@ -46,5 +46,7 @@ class LoginRepositoryLocalImpl extends LoginRepositoryLocal {
     return ("From Shared Preferences => Username: ${loggedUsername} Password: ${loggedPassword} Logged In?: ${isLogged}");
     //return (isLogged);
   }
+
+  
 
 }

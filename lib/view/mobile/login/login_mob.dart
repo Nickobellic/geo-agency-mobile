@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:geo_agency_mobile/view/mobile/login/login_success_mob.dart';
 import 'package:geo_agency_mobile/view/mobile/login/login_failed_mob.dart';
-import '../../../view_model/login_view_model.dart';
+import '../../../view_model/login/login_view_model.dart';
 import '../../rules/login_validation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

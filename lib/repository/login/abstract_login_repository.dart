@@ -4,3 +4,7 @@ abstract class LoginRepositoryLocal {
   Future<void> saveLoginInfo(String _username, String _password, bool _logged);
   Future getLoginInfo();
 }
+
+abstract class LoginRepositoryRemote {
+    Future getUserFromApi();
+}

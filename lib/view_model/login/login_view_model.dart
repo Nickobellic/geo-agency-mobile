@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:geo_agency_mobile/repository/abstract/login_repository_remote.dart';
 import 'package:geo_agency_mobile/helper/dio_exceptions.dart';
 import 'package:geo_agency_mobile/helper/dio_client.dart';
-import '../repository/remote/login_repo_remote.dart';
-import 'package:geo_agency_mobile/repository/local/login_repo_local.dart';
+import '../../repository/login/login_repo_remote.dart';
+import 'package:geo_agency_mobile/repository/login/login_repo_local.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import '../repository/abstract/login_repository_local.dart';
-import "./abstract/login_view_model_abstract.dart";
+import '../../repository/login/abstract_login_repository.dart';
+import 'login_view_model_abstract.dart';
 
 
 // View Model which interacts with Login Form
