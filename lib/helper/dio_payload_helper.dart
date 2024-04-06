@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:ip_geolocation/ip_geolocation.dart';
+
 
 class PayloadHelper {
   
@@ -19,6 +21,16 @@ class PayloadHelper {
 
   }
 
+  static Future<String> getIPAddress() async {
+    try {
+        GeolocationData ipData = await GeolocationAPI.getData();
+        return ipData.ip.toString();
+    } catch(error) {
+      print(error);
+      return "null";
+    }
+  }
+
   static Future<List> getLocationLatLong() async {
     try {
       Position locator = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
@@ -28,13 +40,14 @@ class PayloadHelper {
     }
   }
 
-  static Future createSignInPayload(Map<String, dynamic> requestObject,String login, String password, String taskName) async {
+  static Future createPayload(Map<String, dynamic> requestObject,String login, String password, String taskName) async {
     Map<String, dynamic> payload = {
       "eventCode": "rqstevnt_agcy_agnt_$taskName",
       "systemCode": "agncy",
       "session": {
         "ruleConfirmation": false,
         "gpsLoc": await getLocationLatLong(),
+        "ip": await getIPAddress(),
         "device": requestObject["device"],
         // "device": {"type": "browser", "token": "postman"},
         "task": taskName,
@@ -60,33 +73,3 @@ class PayloadHelper {
     return encoder.convert(parsed);
   }
 }
-
-// Usage
-/*void main() {
-  String login = "9999999999";
-  String password = "5863";
-  String signInPayload = PayloadHelper.createSignInPayload(login, password);
-  print('Request payload:');
-  print(signInPayload);
-
-  // Simulating a response
-  String responseJson = '''
-    {
-      "success": true,
-      "message": "Sign-in successful",
-      "token": "your_auth_token_here",
-      "user": {
-        "id": "user_id_here",
-        "name": "User Name",
-        "email": "user@example.com"
-      }
-    }
-  ''';
-  print('\nResponse payload:');
-  print(responseJson);
-
-  // Parsing the response
-  Map<String, dynamic> response = PayloadHelper.parseSignInResponse(responseJson);
-  print('\nParsed response:');
-  print(response);
-}*/

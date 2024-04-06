@@ -45,7 +45,7 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
       "password": _password,
       "device": deviceData
     };  
-    String signInPayload = await PayloadHelper.createSignInPayload(reqDetails,_username, _password, "login");
+    String signInPayload = await PayloadHelper.createPayload(reqDetails,_username, _password, "login");
     print(signInPayload);
 
     List<String> fetchedUsernames = loginLocalRep.getUsernames();
@@ -69,10 +69,24 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
 
 
     } on DioException catch(e) {
+
       int statusCode = e.response!.statusCode!;
       print('Status Code : $statusCode');
+          dynamic deviceData = await PayloadHelper.getDeviceInfo();
+           Map<String, dynamic> reqDetails = {
+          "code": statusCode,
+            "message": e.toString(),
+          "device": deviceData
+    };  
+    String signInPayload = await PayloadHelper.createPayload(reqDetails,_username, _password, "error");
       return {"valid":false,"message":"Network Error: $e.message"};
     } catch(e,stackTrace) {
+             dynamic deviceData = await PayloadHelper.getDeviceInfo();
+           Map<String, dynamic> reqDetails = {
+            "message": e.toString(),
+          "device": deviceData
+    };
+        String signInPayload = await PayloadHelper.createPayload(reqDetails,_username, _password, "error");
         return {"valid": false, "message": "Error: $e.toString()"};
     }
 

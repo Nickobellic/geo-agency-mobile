@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 // Class that is involved in making HTTP Requests
 
@@ -10,16 +11,27 @@ class DioClient {
 
   static final instance = DioClient._();
 
-  final Dio _dio = Dio(
+  final _dio = Dio(
       BaseOptions(
           baseUrl: baseUrl,
           connectTimeout: const Duration(seconds: 60),
           receiveTimeout: const Duration(seconds: 60),
           responseType: ResponseType.json
       )
+  )..interceptors.add(
+    TalkerDioLogger(
+      settings: const TalkerDioLoggerSettings(
+        printRequestHeaders: true,
+        printResponseHeaders: true,
+        printResponseMessage: true,
+      ),
+    ),
   );
 
-  Dio get dio => _dio;
+
+
+  get dio => _dio;
+  
 
   ///Get Method
   Future<Map<String, dynamic>> get(

@@ -37,6 +37,8 @@ class DioExceptionClass implements Exception{
     }
   String _handleStatusCode(int? statusCode) {
     switch (statusCode) {
+      case 200:
+        return "OK";
       case 400:
         return 'User already exist ';
       case 401:
