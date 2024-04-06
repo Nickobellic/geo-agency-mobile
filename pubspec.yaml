@@ -42,6 +42,7 @@ dependencies:
   riverpod_annotation: ^2.3.4
   hooks_riverpod: ^2.4.10
   flutter_hooks: ^0.20.5
+  geolocator: ^11.0.0
 
 dev_dependencies:
   integration_test:
@@ -63,6 +64,7 @@ dev_dependencies:
   custom_lint: ^0.6.2
   riverpod_lint: ^2.3.9
   http_mock_adapter: ^0.6.1
+  device_info_plus: ^9.1.2
 
 
 # For information on the generic Dart part of this file, see the

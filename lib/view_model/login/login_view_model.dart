@@ -39,7 +39,13 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
   @override
   Future<Map<String, dynamic>> validateUser(String _username, String _password) async{  // Check whether they're already a member or not. Save it in shared_preferences according to the status
     try {
-    String signInPayload = PayloadHelper.createSignInPayload(_username, _password, "login");
+    dynamic deviceData = await PayloadHelper.getDeviceInfo();
+    Map<String, dynamic> reqDetails = {
+      "login": _username,
+      "password": _password,
+      "device": deviceData
+    };  
+    String signInPayload = await PayloadHelper.createSignInPayload(reqDetails,_username, _password, "login");
     print(signInPayload);
 
     List<String> fetchedUsernames = loginLocalRep.getUsernames();
