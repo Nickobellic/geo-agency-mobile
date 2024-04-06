@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:geo_agency_mobile/repository/abstract/login_repository_remote.dart';
+import 'package:geo_agency_mobile/repository/login/login_repo_remote.dart';
+import 'package:geo_agency_mobile/helper/dio_payload_helper.dart';
 import 'package:geo_agency_mobile/helper/dio_exceptions.dart';
 import 'package:geo_agency_mobile/helper/dio_client.dart';
 import '../../repository/login/login_repo_remote.dart';
@@ -38,6 +39,9 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
   @override
   Future<Map<String, dynamic>> validateUser(String _username, String _password) async{  // Check whether they're already a member or not. Save it in shared_preferences according to the status
     try {
+    String signInPayload = PayloadHelper.createSignInPayload(_username, _password, "login");
+    print(signInPayload);
+
     List<String> fetchedUsernames = loginLocalRep.getUsernames();
     List<String> fetchedPasswords = loginLocalRep.getPasswords();
 

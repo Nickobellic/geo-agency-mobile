@@ -6,6 +6,7 @@ import '../../../view_model/login/login_view_model.dart';
 import '../../rules/login_validation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:geo_agency_mobile/utils/Snackbar.dart';
 
 // Login View -> User interactible UI
 
@@ -79,14 +80,8 @@ class LoginMobile extends HookConsumerWidget {  // ConsumerStatefulWidget
           dynamic userInfo = await state.getUserFilledInfo(usernameText.value, passwordText.value); // Read data from Shared Preference
           print(existingUser); // Printing the data stored in Shared Preferences
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(existingUser["message"]), key: Key('login_snackbar_mob'), 
-            action: SnackBarAction(label: 'OK', onPressed: () =>{
-              ScaffoldMessenger.of(context).hideCurrentSnackBar()
-            }),
-            duration: const Duration(milliseconds: 2000),
-            ),
-          );
+          GlobalSnackBar.show(context, existingUser["message"]);
+
           if(existingUser["valid"] == true) {
             Navigator.push(
               context,
