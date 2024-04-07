@@ -1,6 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../rules/login_validation.dart';
+import 'package:geo_agency_mobile/view_model/talker_logger/observer.dart';
+import 'package:talker/talker.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import '../../../view_model/login/login_view_model.dart';
 import 'package:geo_agency_mobile/utils/Snackbar.dart';
@@ -16,11 +19,16 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
   final usernameControllerState = StateProvider<String>((ref) => '');
   final _formKey = GlobalKey<FormState>();
   late LoginDetailsModelImpl ldModel; // Instance of View Model defined
+  final FirebaseCrashlytics _crashlytics = FirebaseCrashlytics.instance;
+
 
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final passwordControllerState = useState('');
+    final observer = CrashlitycsTalkerObserver(crashlytics: _crashlytics);
+
+
     return Consumer(  // Use Consumer to access the Provider methods
       builder: (context, ref, child) {
         final state = ref.watch(loginVMProvider); // Using the View Model Provider
@@ -85,6 +93,7 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
         style: TextButton.styleFrom(padding: const EdgeInsets.all(20.0)),
         child: const Text('Submit', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
       onPressed: ()async {
+
         if(_formKey.currentState!.validate()) {
           //print(passwordController.text); // Prints Password Text in the Console
           //print(await state.getOneFromApi()); // Sample DIO request to get User detail

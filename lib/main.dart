@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geo_agency_mobile/firebase_options.dart';
 import 'package:geo_agency_mobile/view/desktop/login/login_web.dart';
 import 'view/mobile/login/login_mob.dart';
+import 'package:talker/talker.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(
+void main() async{
+
+  try {
+    WidgetsFlutterBinding.ensureInitialized(); 
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform
+    );
+    FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+    runApp(
     ProviderScope(  // Wrap MyApp() with Provider Scope to use Provider inside App
       child: MyApp()
     )
     );
+  } catch(e) {
+    print("Failed to initialize Firebase: $e");
+  }
+
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +31,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  MaterialApp(
       home: MainPage.platformSpecificUI(context),
       debugShowCheckedModeBanner: false,
     );

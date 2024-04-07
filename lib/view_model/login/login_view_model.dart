@@ -9,6 +9,7 @@ import 'package:geo_agency_mobile/repository/login/login_repo_local.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import '../../repository/login/abstract_login_repository.dart';
 import 'login_view_model_abstract.dart';
+import 'package:talker/talker.dart';
 
 
 // View Model which interacts with Login Form
@@ -22,6 +23,7 @@ final loginVMProvider = Provider<LoginDetailsModelImpl>((ref) {   // Creating pr
 class LoginDetailsModelImpl extends LoginDetailsModel {
   final LoginRepositoryLocal loginLocalRep;
   final LoginRepositoryRemote loginRemoteRep;
+  final talker = Talker();
   late BuildContext context;
 
   LoginDetailsModelImpl({required this.loginLocalRep, required this.loginRemoteRep});
@@ -39,12 +41,14 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
   @override
   Future<Map<String, dynamic>> validateUser(String _username, String _password) async{  // Check whether they're already a member or not. Save it in shared_preferences according to the status
     try {
+    talker.info("Getting Device Information");
     dynamic deviceData = await PayloadHelper.getDeviceInfo();
     Map<String, dynamic> reqDetails = {
       "login": _username,
       "password": _password,
       "device": deviceData
     };  
+    talker.info("Creating payload for the Request");
     String signInPayload = await PayloadHelper.createPayload(reqDetails,_username, _password, "login");
     print(signInPayload);
 
@@ -57,12 +61,14 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
     fetchedPasswords.add(usersFromApi[1]);
 
     print(usersFromApi[0]);
-
+    talker.info("Performing Validation Logic Test");
     if(fetchedUsernames.contains(_username) && fetchedPasswords.contains(_password)) {
       loginLocalRep.saveLoginInfo(_username, _password, true);  // If already a member, set logged in as true
+          talker.info("Validation done");
       return {"valid": true, "message": "Authenticated Successfully"};
     } else {
       loginLocalRep.saveLoginInfo(_username, _password, false); // If it is a new member, set logged in as false
+          talker.info("Validation done");
       return {"valid": false, "message": "Unauthorized User"};
     }
 
@@ -79,6 +85,7 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
           "device": deviceData
     };  
     String signInPayload = await PayloadHelper.createPayload(reqDetails,_username, _password, "error");
+      talker.error("Dio Error in Validation");
       return {"valid":false,"message":"Network Error: $e.message"};
     } catch(e,stackTrace) {
              dynamic deviceData = await PayloadHelper.getDeviceInfo();
@@ -87,6 +94,7 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
           "device": deviceData
     };
         String signInPayload = await PayloadHelper.createPayload(reqDetails,_username, _password, "error");
+        talker.error("$e.toString() error in Validation");
         return {"valid": false, "message": "Error: $e.toString()"};
     }
 
