@@ -19,14 +19,14 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
   final usernameControllerState = StateProvider<String>((ref) => '');
   final _formKey = GlobalKey<FormState>();
   late LoginDetailsModelImpl ldModel; // Instance of View Model defined
-  final FirebaseCrashlytics _crashlytics = FirebaseCrashlytics.instance;
+//  final FirebaseCrashlytics _crashlytics = FirebaseCrashlytics.instance;
 
 
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final passwordControllerState = useState('');
-    final observer = CrashlitycsTalkerObserver(crashlytics: _crashlytics);
+    //final observer = CrashlitycsTalkerObserver(crashlytics: _crashlytics);
 
 
     return Consumer(  // Use Consumer to access the Provider methods
@@ -97,6 +97,7 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
         if(_formKey.currentState!.validate()) {
           //print(passwordController.text); // Prints Password Text in the Console
           //print(await state.getOneFromApi()); // Sample DIO request to get User detail
+          //final state = Provider.of<loginVMProvider>(context, listen: false);
           String username = ref.read(usernameControllerState.notifier).state;
           String password = passwordControllerState.value;
           Map<String, dynamic> existingUser = await state.validateUser(username, password);
@@ -104,7 +105,7 @@ class LoginWeb extends HookConsumerWidget {  // ConsumerStatefulWidget
           //print(existingUser); // Prints the Shared Preferences
           print("$username & $password");
           
-          GlobalSnackBar.show(context, existingUser['message']);
+          GlobalSnackBar.show(context, existingUser['message'], 'login_snackbar_web');
 
 
           if(existingUser["valid"] == true) {

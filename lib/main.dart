@@ -10,11 +10,12 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async{
 
   try {
+    /*
     WidgetsFlutterBinding.ensureInitialized(); 
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
-    FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+    FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);*/
     runApp(
     ProviderScope(  // Wrap MyApp() with Provider Scope to use Provider inside App
       child: MyApp()

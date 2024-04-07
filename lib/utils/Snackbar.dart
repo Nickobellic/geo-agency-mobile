@@ -11,9 +11,11 @@ class GlobalSnackBar {
   static show(
     BuildContext context,
     String message,
+    String key
   ) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        key: Key(key),
         elevation: 0.0,
         //behavior: SnackBarBehavior.floating,
         content: Text(message),

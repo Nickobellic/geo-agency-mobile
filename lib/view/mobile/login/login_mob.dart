@@ -80,7 +80,7 @@ class LoginMobile extends HookConsumerWidget {  // ConsumerStatefulWidget
           dynamic userInfo = await state.getUserFilledInfo(usernameText.value, passwordText.value); // Read data from Shared Preference
           print(existingUser); // Printing the data stored in Shared Preferences
 
-          GlobalSnackBar.show(context, existingUser["message"]);
+          GlobalSnackBar.show(context, existingUser["message"], 'login_snackbar_mob');
 
           if(existingUser["valid"] == true) {
             Navigator.push(
