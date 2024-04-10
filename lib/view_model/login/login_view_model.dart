@@ -19,6 +19,8 @@ final loginVMProvider = Provider<LoginDetailsModelImpl>((ref) {   // Creating pr
 });
 
 
+//@GR - Use IOC Container ro register these and look up using service locator.
+//https://pub.dev/packages/ioc_container
 
 class LoginDetailsModelImpl extends LoginDetailsModel {
   final LoginRepositoryLocal loginLocalRep;
@@ -89,7 +91,7 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
       return {"valid":false,"message":"Network Error: $e.message"};
     } catch(e,stackTrace) {
              dynamic deviceData = await PayloadHelper.getDeviceInfo();
-           Map<String, dynamic> reqDetails = {
+           Map<String, dynamic>  = {
             "message": e.toString(),
           "device": deviceData
     };
@@ -106,4 +108,4 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
     return loginLocalRep.getLoginInfo();
   }
 
-}
+}reqDetails
