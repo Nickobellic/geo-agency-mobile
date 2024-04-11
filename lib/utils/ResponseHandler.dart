@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-
+import 'Globals.dart';
 
 class GlobalSnackBar {
   final String message;
+  //final String key;
 
   const GlobalSnackBar({
     required this.message,
   });
 
-  static show(
-    BuildContext context,
-    String message,
-    String key
+  void show(
   ) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    snackbarKey.currentState?.showSnackBar(
       SnackBar(
-        key: Key(key),
         elevation: 0.0,
         //behavior: SnackBarBehavior.floating,
         content: Text(message),

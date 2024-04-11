@@ -7,6 +7,9 @@ import 'package:geo_agency_mobile/helper/dio_client.dart';
 import 'package:geo_agency_mobile/data/User_data.dart' as data;
 import 'package:geo_agency_mobile/helper/dio_exceptions.dart';
 import 'package:talker/talker.dart';
+import 'package:geo_agency_mobile/utils/ResponseHandler.dart';
+import 'package:flutter/material.dart';
+import 'package:geo_agency_mobile/utils/Globals.dart';
 // Repository -> Fetch Data from Data Source.
 
 final LoginRepositoryRemoteProvider = Provider<LoginRepositoryRemote>(
@@ -14,7 +17,7 @@ final LoginRepositoryRemoteProvider = Provider<LoginRepositoryRemote>(
 
 class LoginRepositoryRemoteImpl extends LoginRepositoryRemote {
   final talker = Talker();
-  @ResponseHandler //@GR  Show snackbar through the ResponseHandler -
+  //@ResponseHandler //@GR  Show snackbar through the ResponseHandler -
   // Refer https://stackoverflow.com/questions/68846785/flutter-show-snackbar-without-context/68847551#68847551,
   Future getUserFromApi() async {
     // Get random User detail from API through Dio
@@ -30,6 +33,8 @@ class LoginRepositoryRemoteImpl extends LoginRepositoryRemote {
       // Sending Error to the Snackbar for display
       var error = DioExceptionClass.fromDioError(e);
       talker.error("User detail retrieval from API failed");
+      final SnackBar snackBar = SnackBar(content: Text("your snackbar message"));
+      snackbarKey.currentState?.showSnackBar(snackBar);
       throw error.errorMessage;
     }
   }

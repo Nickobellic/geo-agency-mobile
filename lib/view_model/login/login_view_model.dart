@@ -10,6 +10,8 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import '../../repository/login/abstract_login_repository.dart';
 import 'login_view_model_abstract.dart';
 import 'package:talker/talker.dart';
+import 'package:geo_agency_mobile/utils/ResponseHandler.dart';
+import 'package:geo_agency_mobile/utils/Globals.dart';
 
 
 // View Model which interacts with Login Form
@@ -63,6 +65,8 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
     fetchedPasswords.add(usersFromApi[1]);
 
     print(usersFromApi[0]);
+      final GlobalSnackBar snackBar = GlobalSnackBar(message: "your snackbar message");
+      snackBar.show();
     talker.info("Performing Validation Logic Test");
     if(fetchedUsernames.contains(_username) && fetchedPasswords.contains(_password)) {
       loginLocalRep.saveLoginInfo(_username, _password, true);  // If already a member, set logged in as true
@@ -91,7 +95,7 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
       return {"valid":false,"message":"Network Error: $e.message"};
     } catch(e,stackTrace) {
              dynamic deviceData = await PayloadHelper.getDeviceInfo();
-           Map<String, dynamic>  = {
+           Map<String, dynamic> reqDetails = {
             "message": e.toString(),
           "device": deviceData
     };
@@ -108,4 +112,4 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
     return loginLocalRep.getLoginInfo();
   }
 
-}reqDetails
+}

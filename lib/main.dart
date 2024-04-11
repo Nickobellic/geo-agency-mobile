@@ -4,6 +4,7 @@ import 'package:geo_agency_mobile/firebase_options.dart';
 import 'package:geo_agency_mobile/view/desktop/login/login_web.dart';
 import 'view/mobile/login/login_mob.dart';
 import 'package:talker/talker.dart';
+import 'package:geo_agency_mobile/utils/Globals.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       home: MainPage.platformSpecificUI(context),
+      scaffoldMessengerKey: snackbarKey,
       debugShowCheckedModeBanner: false,
     );
   }

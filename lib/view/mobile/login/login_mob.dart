@@ -6,7 +6,7 @@ import '../../../view_model/login/login_view_model.dart';
 import '../../rules/login_validation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:geo_agency_mobile/utils/Snackbar.dart';
+import 'package:geo_agency_mobile/utils/ResponseHandler.dart';
 
 // Login View -> User interactible UI
 
@@ -100,8 +100,8 @@ class LoginMobile extends HookConsumerWidget {
                             print(
                                 existingUser); // Printing the data stored in Shared Preferences
                             //@GR - Show snackbar from Repo layer, use globalkey without context. Annotate with @ResponseHandler - see login_repo_remote
-                            GlobalSnackBar.show(context,
-                                existingUser["message"], 'login_snackbar_mob');
+                            /*GlobalSnackBar.show(context,
+                                existingUser["message"], 'login_snackbar_mob');*/
 
                             if (existingUser["valid"] == true) {
                               Navigator.push(

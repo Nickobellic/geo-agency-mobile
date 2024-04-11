@@ -6,11 +6,11 @@ import 'package:talker/talker.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import '../../../view_model/login/login_view_model.dart';
-import 'package:geo_agency_mobile/utils/Snackbar.dart';
 import 'package:geo_agency_mobile/view/desktop/login/login_success_web.dart';
 import 'package:geo_agency_mobile/view/desktop/login/login_failed_web.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Login View -> User interactible UI
+
 
 class LoginWeb extends HookConsumerWidget {
   // ConsumerStatefulWidget
@@ -19,6 +19,8 @@ class LoginWeb extends HookConsumerWidget {
   final passwordController = TextEditingController();
   final usernameControllerState = StateProvider<String>((ref) => '');
   final _formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   late LoginDetailsModelImpl ldModel; // Instance of View Model defined
 //  final FirebaseCrashlytics _crashlytics = FirebaseCrashlytics.instance;
 
@@ -34,6 +36,7 @@ class LoginWeb extends HookConsumerWidget {
             ref.watch(loginVMProvider); // Using the View Model Provider
 
         return Scaffold(
+            key: _scaffoldKey,
             appBar: AppBar(
               title: const Text("Login (Web)"),
             ),
@@ -141,10 +144,6 @@ class LoginWeb extends HookConsumerWidget {
                                 //print(existingUser); // Prints the Shared Preferences
                                 print("$username & $password");
                                 //@GR - Show snackbar from Repo layer, use globalkey without context. Annotate with @ResponseHandler - see login_repo_remote
-                                GlobalSnackBar.show(
-                                    context,
-                                    existingUser['message'],
-                                    'login_snackbar_web');
 
                                 if (existingUser["valid"] == true) {
                                   Navigator.push(
