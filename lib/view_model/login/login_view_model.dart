@@ -12,6 +12,7 @@ import 'login_view_model_abstract.dart';
 import 'package:talker/talker.dart';
 import 'package:geo_agency_mobile/utils/ResponseHandler.dart';
 import 'package:geo_agency_mobile/utils/Globals.dart';
+import 'package:geo_agency_mobile/service/service_locator.dart';
 
 
 // View Model which interacts with Login Form
@@ -25,12 +26,13 @@ final loginVMProvider = Provider<LoginDetailsModelImpl>((ref) {   // Creating pr
 //https://pub.dev/packages/ioc_container
 
 class LoginDetailsModelImpl extends LoginDetailsModel {
-  final LoginRepositoryLocal loginLocalRep;
-  final LoginRepositoryRemote loginRemoteRep;
+
+  final LoginRepositoryLocal loginLocalRep = container<LoginRepositoryLocalImpl>();
+  final LoginRepositoryRemote loginRemoteRep = container<LoginRepositoryRemoteImpl>();
   final talker = Talker();
   late BuildContext context;
 
-  LoginDetailsModelImpl({required this.loginLocalRep, required this.loginRemoteRep});
+  LoginDetailsModelImpl({required loginLocalRep, required loginRemoteRep});
 
   @override
   String printUser() {  // Get first User's username and password

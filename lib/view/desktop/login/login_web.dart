@@ -9,6 +9,7 @@ import '../../../view_model/login/login_view_model.dart';
 import 'package:geo_agency_mobile/view/desktop/login/login_success_web.dart';
 import 'package:geo_agency_mobile/view/desktop/login/login_failed_web.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:geo_agency_mobile/service/service_locator.dart';
 // Login View -> User interactible UI
 
 
@@ -33,7 +34,7 @@ class LoginWeb extends HookConsumerWidget {
       // Use Consumer to access the Provider methods
       builder: (context, ref, child) {
         final state =
-            ref.watch(loginVMProvider); // Using the View Model Provider
+            container<LoginDetailsModelImpl>(); // Using the View Model Provider
 
         return Scaffold(
             key: _scaffoldKey,
