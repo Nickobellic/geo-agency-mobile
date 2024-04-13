@@ -45,6 +45,7 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
   }
 
   @override
+  @ResponseHandlerAnnotation()
   Future<Map<String, dynamic>> validateUser(String _username, String _password) async{  // Check whether they're already a member or not. Save it in shared_preferences according to the status
     try {
     talker.info("Getting Device Information");
@@ -67,16 +68,19 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
     fetchedPasswords.add(usersFromApi[1]);
 
     print(usersFromApi[0]);
-      final GlobalSnackBar snackBar = GlobalSnackBar(message: "your snackbar message");
-      snackBar.show();
+
     talker.info("Performing Validation Logic Test");
     if(fetchedUsernames.contains(_username) && fetchedPasswords.contains(_password)) {
       loginLocalRep.saveLoginInfo(_username, _password, true);  // If already a member, set logged in as true
           talker.info("Validation done");
+          final message = "Authenticated Successfully";
+          showSnackbar(message);
       return {"valid": true, "message": "Authenticated Successfully"};
     } else {
       loginLocalRep.saveLoginInfo(_username, _password, false); // If it is a new member, set logged in as false
           talker.info("Validation done");
+      final message = "Unauthorized User";
+          showSnackbar(message);
       return {"valid": false, "message": "Unauthorized User"};
     }
 
@@ -94,6 +98,8 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
     };  
     String signInPayload = await PayloadHelper.createPayload(reqDetails,_username, _password, "error");
       talker.error("Dio Error in Validation");
+      final message = "Network Error: $e.message";
+      showSnackbar(message);
       return {"valid":false,"message":"Network Error: $e.message"};
     } catch(e,stackTrace) {
              dynamic deviceData = await PayloadHelper.getDeviceInfo();
@@ -103,6 +109,8 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
     };
         String signInPayload = await PayloadHelper.createPayload(reqDetails,_username, _password, "error");
         talker.error("$e.toString() error in Validation");
+        final message = "Error: $e.toString()";
+        showSnackbar(message);
         return {"valid": false, "message": "Error: $e.toString()"};
     }
 

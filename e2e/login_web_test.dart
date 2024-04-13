@@ -3,6 +3,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:geo_agency_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geo_agency_mobile/service/service_locator.dart' as service_locator;
 
 
 // flutter drive  --driver=integration_test/login_web.dart  --target=integration_test/login_web_test.dart -d chrome 
@@ -11,7 +12,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized(); // NEW
 
   testWidgets('Successful Authentication Test (Web)', (tester) async{
-
+    await service_locator.main();
     await tester.pumpWidget(ProviderScope(child: MyApp())); // Launches the App
 
     await tester.pump(new Duration(seconds: 3));

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'Globals.dart';
 
-class GlobalSnackBar {
+class ResponseHandler {
+  const ResponseHandler();
+}
+
+
+class ResponseHandlerSnackbar {
   final String message;
   //final String key;
 
-  const GlobalSnackBar({
-    required this.message,
-  });
+  const ResponseHandlerSnackbar(this.message);
 
   void show(
   ) {
@@ -30,4 +33,8 @@ class GlobalSnackBar {
       ),
     );
   }
+}
+
+void showSnackbar(String message) {
+  ResponseHandlerSnackbar(message).show();
 }
