@@ -22,7 +22,7 @@ class LoginRepositoryRemoteImpl extends LoginRepositoryRemote {
   final talker = Talker();
   //@ResponseHandler //@GR  Show snackbar through the ResponseHandler -
   // Refer https://stackoverflow.com/questions/68846785/flutter-show-snackbar-without-context/68847551#68847551,
-  @ResponseHandlerAnnotation()
+  @ResponseHandler()
   Future getUserFromApi() async {
     // Get random User detail from API through Dio
     try {
@@ -37,7 +37,7 @@ class LoginRepositoryRemoteImpl extends LoginRepositoryRemote {
       // Sending Error to the Snackbar for display
       var error = DioExceptionClass.fromDioError(e);
       talker.error("User detail retrieval from API failed");
-      showErrorSnackbar(error.errorMessage);
+      showSnackbar(error.errorMessage);
 
       /*final SnackBar snackBar = SnackBar(content: Text("your snackbar message"));
       snackbarKey.currentState?.showSnackBar(snackBar);*/

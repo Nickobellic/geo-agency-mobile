@@ -27,7 +27,7 @@ final loginVMProvider = Provider<LoginDetailsModelImpl>((ref) {   // Creating pr
 
 class LoginDetailsModelImpl extends LoginDetailsModel {
 
-  final LoginRepositoryLocal loginLocalRep = container<LoginRepositoryLocalImpl>();
+  final LoginRepositoryLocal loginLocalRep = container<LoginRepositoryLocalImpl>(); // assigning localRep from IOC Container 'container'
   final LoginRepositoryRemote loginRemoteRep = container<LoginRepositoryRemoteImpl>();
   final talker = Talker();
   late BuildContext context;
@@ -45,7 +45,7 @@ class LoginDetailsModelImpl extends LoginDetailsModel {
   }
 
   @override
-  @ResponseHandlerAnnotation()
+  @ResponseHandler()
   Future<Map<String, dynamic>> validateUser(String _username, String _password) async{  // Check whether they're already a member or not. Save it in shared_preferences according to the status
     try {
     talker.info("Getting Device Information");

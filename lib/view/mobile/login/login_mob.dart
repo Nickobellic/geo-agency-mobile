@@ -100,9 +100,6 @@ class LoginMobile extends HookConsumerWidget {
                             print(
                                 existingUser); // Printing the data stored in Shared Preferences
                             //@GR - Show snackbar from Repo layer, use globalkey without context. Annotate with @ResponseHandler - see login_repo_remote
-                            /*GlobalSnackBar.show(context,
-                                existingUser["message"], 'login_snackbar_mob');*/
-
                             if (existingUser["valid"] == true) {
                               Navigator.push(
                                 context,
