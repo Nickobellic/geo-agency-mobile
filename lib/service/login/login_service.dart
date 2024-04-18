@@ -8,7 +8,7 @@ import 'package:riverpod/riverpod.dart';
 
 final loginServiceProvider = Provider<LoginService>((ref) {
   return container<LoginService>();
-})
+});
 
 class LoginService {
     final LoginRepositoryLocalImpl localRep;

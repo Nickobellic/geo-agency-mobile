@@ -138,9 +138,7 @@ class LoginWeb extends HookConsumerWidget {
                                 String password = passwordControllerState.value;
                                 Map<String, dynamic> existingUser = await state
                                     .validateUser(username, password);
-                                dynamic userInfo = await state.getUserFilledInfo(
-                                    username,
-                                    password); // Read data from Shared Preference
+                                dynamic userInfo = await state.getUserFilledInfo(); // Read data from Shared Preference
                                 //print(existingUser); // Prints the Shared Preferences
                                 print("$username & $password");
                                 //@GR - Show snackbar from Repo layer, use globalkey without context. Annotate with @ResponseHandler - see login_repo_remote

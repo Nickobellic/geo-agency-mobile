@@ -93,10 +93,8 @@ class LoginMobile extends HookConsumerWidget {
                                     usernameText.value,
                                     passwordText
                                         .value); // Validates Login details and saves data inside Shared Preferences
-                            dynamic userInfo = await state.getUserFilledInfo(
-                                usernameText.value,
-                                passwordText
-                                    .value); // Read data from Shared Preference
+                              
+                            dynamic userInfo = await state.getUserFilledInfo(); // Read data from Shared Preference
                             print(
                                 existingUser); // Printing the data stored in Shared Preferences
                             //@GR - Show snackbar from Repo layer, use globalkey without context. Annotate with @ResponseHandler - see login_repo_remote
